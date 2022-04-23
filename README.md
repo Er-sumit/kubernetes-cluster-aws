@@ -16,7 +16,7 @@ You must have kubectl installed.
 ``` curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/darwin/amd64/kubectl" ```
 
 Then follow
-``` mkdir -p bin; mv kubectl bin/.; chmod +x bin/kubectl; export PATH=$PATH:/Users/w/Desktop/MyWork2022/Django_RestAPIs_Serializer_Project_2022/AWS/bin; kubectl version --client```
+``` mkdir -p bin; mv kubectl bin/.; chmod +x bin/kubectl; export PATH=$PATH:${PWD}/bin; kubectl version --client```
 
 You must install kops on a 64-bit (AMD64 and Intel 64) device architecture.
 ```curl -Lo kops https://github.com/kubernetes/kops/releases/download/$(curl -s https://api.github.com/repos/kubernetes/kops/releases/latest | grep tag_name | cut -d '"' -f 4)/kops-darwin-amd64; mv kops bin/kops; chmod +x ./bin/kops ```
@@ -30,3 +30,9 @@ CREATE CLUSTER
 That’s it. This command is used for creating the configuration of the cluster. To launch the cluster you can use the command:
 
 ``` kops update cluster kube.april.aws --yes --state=s3://aks-aprilaws --yes ```
+
+kops validate cluster --wait 10m --state=s3://aks-aprilaws
+export KOPS_STATE_STORE=s3://aks-aprilaws
+kops validate cluster --wait 10m
+
+ kops delete cluster kube.april.aws  --yes
